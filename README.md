@@ -11,6 +11,8 @@ To find matches, it will then run over all word int32 values and find matches us
 
 The algo is quite fast, on my machine it can find all matching words for a given scrambled word in about 4ms.
 
+[![Build Status](https://drone.io/github.com/frankpepermans/unscrambler/status.png)](https://drone.io/github.com/frankpepermans/unscrambler/latest)
+
 Try It Now
 -----------
 Add the unscramble package to your pubspec.yaml file:
