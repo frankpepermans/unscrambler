@@ -9,7 +9,15 @@ class Dictionary {
   final List<WordBinary> _structures = <WordBinary>[];
   
   Dictionary(String source, {int wordSize: -1}) {
-    source.split('\n').forEach(
+    final String T = source.substring(0, 100);
+    String splitChar;
+    
+    if (_isCleanSplit(T.split('\r'))) splitChar = '\r';
+    if (_isCleanSplit(T.split('\n'))) splitChar = '\n';
+    if (_isCleanSplit(T.split('\n\r'))) splitChar = '\n\r';
+    if (_isCleanSplit(T.split('\r\n'))) splitChar = '\r\n';
+    
+    source.split(splitChar).forEach(
       (String W) {
         if (W.length > 0) addStructure(new WordBinary(W));
       }
@@ -18,6 +26,19 @@ class Dictionary {
   
   void addStructure(WordBinary S) {
     _structures.add(S);
+  }
+  
+  bool _isCleanSplit(List<String> T) {
+    if (T.length <= 1) return false;
+    
+    final String S = T[1];
+    final int min = 97, max = 97 + Dictionary.NUM_CHARS;
+    final int J = S.codeUnits.firstWhere(
+      (int I) => (I < min || I >= max),
+      orElse: () => null
+    );
+    
+    return (J == null);
   }
   
   List<WordBinary> match(String W, int numBlanks) {
