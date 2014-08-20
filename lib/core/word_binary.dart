@@ -14,7 +14,7 @@ class WordBinary {
   }
   
   bool isAnagramOf(WordBinary other, int numBlanks) {
-    if (other.wordLen != wordLen) return false;
+    if (other.wordLen + numBlanks != wordLen) return false;
     
     return matches(other, numBlanks);
   }
