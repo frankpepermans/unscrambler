@@ -4,7 +4,7 @@ class Dictionary {
   
   static int NUM_CHARS = 26;
   static int NUM_BITS = 26 * 7;
-  static int NUM_INT32 = (NUM_BITS / 32).ceil();
+  static int NUM_INT32 = NUM_BITS ~/ 32 + 1;
   
   final List<WordBinary> _structures = <WordBinary>[];
   
