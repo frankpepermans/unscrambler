@@ -1,4 +1,5 @@
-name: Unscrambler
+name: unscrambler
 description: A word unscrambler algorithm
-dependencies:
+dev_dependencies:
   benchmark_harness: any
+  unittest: any
