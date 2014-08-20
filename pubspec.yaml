@@ -1,4 +1,4 @@
-name: igindo
-description: A sample command-line application
+name: Unscrambler
+description: A word unscrambler algoritm
 dependencies:
   benchmark_harness: any

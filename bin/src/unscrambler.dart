@@ -1,4 +1,4 @@
 library unscrambler;
 
-part 'utils/dictionary.dart';
-part 'utils/word_binary.dart';
+part 'core/dictionary.dart';
+part 'core/word_binary.dart';
