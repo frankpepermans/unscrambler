@@ -22,7 +22,7 @@ class WordBinary {
   bool matches(WordBinary other, int numBlanks) {
     if (other.wordLen + numBlanks < wordLen) return false;
     
-    for (int i=0; i<Dictionary.NUM_INT32; i++) {
+    for (int i=0; i<Dictionary.NUM_INT; i++) {
       numBlanks = _test(binary[i], other.binary[i], numBlanks);
       
       if (numBlanks == -1) return false;
@@ -63,11 +63,11 @@ class WordBinary {
   }
   
   List<int> toBinary() {
-    final List<int> R = new List<int>(Dictionary.NUM_INT32);
+    final List<int> R = new List<int>(Dictionary.NUM_INT);
     final List<int> U = word.codeUnits;
     final List<int> B = new List<int>(Dictionary.NUM_CHARS);
     final int len = U.length;
-    int i, j, k = 1, l, m;
+    int i, j, k, l;
     
     for (i=0; i<len; i++) {
       j = U[i] - 97;
@@ -76,18 +76,17 @@ class WordBinary {
       else B[j] *= 2;
     }
     
-    for (i=j=l=m=0; i<Dictionary.NUM_CHARS; i++, k <<= 7, l += 7) {
-      if (l > 32) {
-        R[m++] = j;
+    for (i=j=k=l=0; i<Dictionary.NUM_CHARS; i++, k += 7) {
+      if (k > Dictionary.INT_SIZE) {
+        R[l++] = j;
         
-        j = l = 0;
-        k = 1;
+        j = k = 0;
       }
       
-      if (B[i] != null) j |= (B[i] - 1) * k;
+      if (B[i] != null) j |= (B[i] - 1) << k;
     }
     
-    R[m++] = j;
+    R[l++] = j;
     
     return R;
   }
