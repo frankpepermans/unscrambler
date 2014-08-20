@@ -1,4 +1,4 @@
 name: Unscrambler
-description: A word unscrambler algoritm
+description: A word unscrambler algorithm
 dependencies:
   benchmark_harness: any
