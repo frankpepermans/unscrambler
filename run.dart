@@ -42,7 +42,7 @@ List<WordBinary> match(Dictionary D, String V, int N) {
 List<WordBinary> anagrams(Dictionary D, String V) {
   final Stopwatch S = new Stopwatch()..start();
   
-  final List<WordBinary> L = D.anagrams(V);
+  final List<WordBinary> L = D.anagrams(V, 0);
   // roh
   
   S.stop();

@@ -15,7 +15,7 @@ void main() {
     final List<WordBinary> allMatches = D.match('zyxonzz', 0);
     final List<WordBinary> allMatches2 = D.match('zyxonzz', 1);
     final List<WordBinary> allMatches3 = D.match('zyxonzz', 2);
-    final List<WordBinary> allMatches4 = D.anagrams('battles');
+    final List<WordBinary> allMatches4 = D.anagrams('battles', 0);
     
     expect(allMatches.length, 14);
     

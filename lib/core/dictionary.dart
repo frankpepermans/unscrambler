@@ -57,30 +57,17 @@ class Dictionary {
     return allMatches;
   }
   
-  List<WordBinary> anagrams(String W) {
+  List<WordBinary> anagrams(String W, int numBlanks) {
     final WordBinary S = new WordBinary(W);
     final List<WordBinary> allMatches = <WordBinary>[];
     final int len = _structures.length;
     WordBinary s;
-    int i, j;
-    bool M;
+    int i;
     
     for (i=0; i<len; i++) {
       s = _structures[i];
       
-      if (s.wordLen == S.wordLen) {
-        M = true;
-        
-        for (j=0; j<NUM_INT32; j++) {
-          if (s.binary[j] != S.binary[j]) {
-            M = false;
-            
-            break;
-          }
-        }
-        
-        if (M) allMatches.add(s);
-      }
+      if (s.isAnagramOf(S, numBlanks)) allMatches.add(s);
     }
     
     return allMatches;

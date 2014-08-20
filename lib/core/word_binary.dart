@@ -13,6 +13,12 @@ class WordBinary {
     binary = toBinary();
   }
   
+  bool isAnagramOf(WordBinary other, int numBlanks) {
+    if (other.wordLen != wordLen) return false;
+    
+    return matches(other, numBlanks);
+  }
+  
   bool matches(WordBinary other, int numBlanks) {
     if (other.wordLen + numBlanks < wordLen) return false;
     
