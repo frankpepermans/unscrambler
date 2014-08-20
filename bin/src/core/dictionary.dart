@@ -41,29 +41,27 @@ class Dictionary {
     final List<WordBinary> allMatches = <WordBinary>[];
     final int len = _structures.length;
     WordBinary s;
-    int i;
+    int i, j;
+    bool M;
     
     for (i=0; i<len; i++) {
       s = _structures[i];
       
-      if (s.binary == S.binary) allMatches.add(s);
+      if (s.wordLen == S.wordLen) {
+        M = true;
+        
+        for (j=0; j<NUM_INT32; j++) {
+          if (s.binary[j] != S.binary[j]) {
+            M = false;
+            
+            break;
+          }
+        }
+        
+        if (M) allMatches.add(s);
+      }
     }
     
     return allMatches;
-  }
-  
-  String toString() {
-    final StringBuffer S = new StringBuffer();
-    final int len = _structures.length, len2 = len-1;
-    WordBinary s;
-    int i;
-    
-    for (i=0; i<len; i++) {
-      s = _structures[i];
-      
-      S.write('${s.word},${s.binary}${(i < len2) ? ',' : ''}');
-    }
-    
-    return S.toString();
   }
 }

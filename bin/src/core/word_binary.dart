@@ -17,9 +17,7 @@ class WordBinary {
     if (other.wordLen + numBlanks < wordLen) return false;
     
     for (int i=0; i<Dictionary.NUM_INT32; i++) {
-      int O = binary[i], P = other.binary[i];
-      
-      numBlanks = _test(O, P, numBlanks);
+      numBlanks = _test(binary[i], other.binary[i], numBlanks);
       
       if (numBlanks == -1) return false;
     }
