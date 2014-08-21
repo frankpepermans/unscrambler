@@ -1,5 +1,5 @@
 name: unscrambler
-version: 0.9.4
+version: 0.9.5
 author: Frank Pepermans <frank@igindo.com>
 description: A word unscrambler algorithm
 homepage: https://github.com/frankpepermans/unscrambler
