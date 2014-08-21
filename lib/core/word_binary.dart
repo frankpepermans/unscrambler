@@ -32,14 +32,14 @@ class WordBinary {
   }
   
   int _test(int sA, int sB, int numBlanks) {
+    if (sA == 0) return numBlanks;
+    
     int M = (sB ^ sA) & sA;
     
     if (M == 0) return numBlanks;
     else if (numBlanks == 0) return -1;
     
-    int N;
-    
-    while (M > 0) {
+    for (int N ;M > 0; M >>= 7) {
       N = M & 0x7F;
       
       if (N > 0) {
@@ -55,8 +55,6 @@ class WordBinary {
         
         if (numBlanks < 0) return -1;
       }
-      
-      M >>= 7;
     }
     
     return numBlanks;
