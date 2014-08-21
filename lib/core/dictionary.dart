@@ -2,9 +2,9 @@ part of unscrambler;
 
 class Dictionary {
   
-  static int INT_SIZE = 32;
-  static int NUM_CHARS = 26;
-  static int NUM_INT = 6;
+  static int INT_SIZE = 32; // INT bit size
+  static int NUM_CHARS = 26; // alphabetical chars
+  static int NUM_INT = (7 * 26) ~/ (INT_SIZE - (INT_SIZE % 7)) + 1; // amount of INT(size) needed per word
   
   final List<WordBinary> _structures = <WordBinary>[];
   

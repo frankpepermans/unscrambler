@@ -4,13 +4,13 @@ class WordBinary {
   
   final String word;
   
-  List<int> binary;
+  List<int> segments;
   int wordLen;
   
   WordBinary(this.word) {
     wordLen = word.length;
     
-    binary = toBinary();
+    segments = toBinary();
   }
   
   bool isAnagramOf(WordBinary other, int numBlanks) {
@@ -23,7 +23,7 @@ class WordBinary {
     if (other.wordLen + numBlanks < wordLen) return false;
     
     for (int i=0; i<Dictionary.NUM_INT; i++) {
-      numBlanks = _test(binary[i], other.binary[i], numBlanks);
+      numBlanks = _test(segments[i], other.segments[i], numBlanks);
       
       if (numBlanks == -1) return false;
     }
@@ -31,8 +31,8 @@ class WordBinary {
     return true;
   }
   
-  int _test(int O, int P, int numBlanks) {
-    int M = (P ^ O) & O;
+  int _test(int sA, int sB, int numBlanks) {
+    int M = (sB ^ sA) & sA;
     
     if (M == 0) return numBlanks;
     else if (numBlanks == 0) return -1;
@@ -63,32 +63,32 @@ class WordBinary {
   }
   
   List<int> toBinary() {
-    final List<int> R = new List<int>(Dictionary.NUM_INT);
+    final List<int> S = new List<int>(Dictionary.NUM_INT);
     final List<int> U = word.codeUnits;
-    final List<int> B = new List<int>(Dictionary.NUM_CHARS);
+    final List<int> C = new List<int>(Dictionary.NUM_CHARS);
     final int len = U.length;
     int i, j, k, l;
     
     for (i=0; i<len; i++) {
       j = U[i] - 97;
      
-      if (B[j] == null) B[j] = 2;
-      else B[j] *= 2;
+      if (C[j] == null) C[j] = 2;
+      else C[j] *= 2;
     }
     
     for (i=j=k=l=0; i<Dictionary.NUM_CHARS; i++, k += 7) {
-      if (k > Dictionary.INT_SIZE) {
-        R[l++] = j;
+      if (k + 7 > Dictionary.INT_SIZE) {
+        S[l++] = j;
         
         j = k = 0;
       }
       
-      if (B[i] != null) j |= (B[i] - 1) << k;
+      if (C[i] != null) j |= (C[i] - 1) << k;
     }
     
-    R[l++] = j;
+    S[l++] = j;
     
-    return R;
+    return S;
   }
   
   String toString() => word;
