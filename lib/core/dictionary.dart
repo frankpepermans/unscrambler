@@ -19,14 +19,12 @@ class Dictionary {
     
     source.split(splitChar).forEach(
       (String W) {
-        if (W.length > 0) addStructure(new WordBinary(W));
+        if (W.isNotEmpty) addStructure(new WordBinary(W));
       }
     );
   }
   
-  void addStructure(WordBinary S) {
-    _structures.add(S);
-  }
+  void addStructure(WordBinary S) => _structures.add(S);
   
   bool _isCleanSplit(List<String> T) {
     if (T.length <= 1) return false;
