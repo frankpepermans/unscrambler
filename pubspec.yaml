@@ -1,9 +1,11 @@
 name: unscrambler
-version: 0.9.6
+version: 1.0.0
 author: Frank Pepermans <frank@igindo.com>
 description: A word unscrambler algorithm
 homepage: https://github.com/frankpepermans/unscrambler
 documentation: https://github.com/frankpepermans/unscrambler
+environment:
+  sdk: '>=2.0.0-dev.51.0 <2.0.0'
 dev_dependencies:
   benchmark_harness: any
-  unittest: any
+  test: any
