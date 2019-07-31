@@ -1,8 +1,6 @@
 part of unscrambler;
 
 class Dictionary {
-  static int NUM_CHARS = 26; // alphabetical chars
-
   final _structures = <WordBinary>[];
 
   Dictionary(String source, {String delimiter}) {
