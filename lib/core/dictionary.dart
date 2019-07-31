@@ -30,11 +30,9 @@ class Dictionary {
     final S = new WordBinary(W),
         allMatches = <WordBinary>[],
         len = _structures.length;
-    WordBinary s;
-    int i;
 
-    for (i = 0; i < len; i++) {
-      s = _structures[i];
+    for (var i = 0; i < len; i++) {
+      final s = _structures[i];
 
       if (s.matches(S, numBlanks)) allMatches.add(s);
     }
@@ -46,11 +44,9 @@ class Dictionary {
     final S = new WordBinary(W),
         allMatches = <WordBinary>[],
         len = _structures.length;
-    WordBinary s;
-    int i;
 
-    for (i = 0; i < len; i++) {
-      s = _structures[i];
+    for (var i = 0; i < len; i++) {
+      final s = _structures[i];
 
       if (s.isAnagramOf(S, numBlanks)) allMatches.add(s);
     }
