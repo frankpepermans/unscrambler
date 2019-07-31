@@ -1,8 +1,6 @@
 part of unscrambler;
 
 class Dictionary {
-  final _structures = <WordBinary>[];
-
   Dictionary(String source, {String delimiter}) {
     final String sample = source.substring(0, 100);
     String split;
@@ -21,6 +19,8 @@ class Dictionary {
     final words = source.split(split);
     for (final word in words) addStructure(WordBinary(word));
   }
+
+  final _structures = <WordBinary>[];
 
   void addStructure(WordBinary S) => _structures.add(S);
 
