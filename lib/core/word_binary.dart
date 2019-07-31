@@ -11,7 +11,7 @@ class WordBinary {
   Uint8List segments;
 
   bool isAnagramOf(WordBinary other, int numBlanks) =>
-      (other.wordLen + numBlanks >= wordLen) &&
+      (other.wordLen + numBlanks == wordLen) &&
       _test(other.segments, numBlanks);
 
   bool matches(WordBinary other, int numBlanks) =>
@@ -28,18 +28,21 @@ class WordBinary {
 
       // Mask off the bits of the letters we currently have
       // This leaves only N consecutive bits when we're missing N letters
-      var _missingLetters = (_thisLetter ^ _otherLetter) & _otherLetter;
+      var _missingLetters = (_otherLetter ^ _thisLetter) & _thisLetter;
 
       // We have enough of this letter
       if (_missingLetters == 0) continue;
 
       // Here we assume that we will never encounter non-consecutive bits
       while (_missingLetters & 0x1 == 0) {
-        _missingLetters = _missingLetters >> 1;
+        _missingLetters >>= 1;
       }
 
-      // Use wildcards to replace the missing letters
-      _availableBlanks -= _missingLetters;
+      // Subtract a blank for every active bit
+      while (_missingLetters & 0x1 != 0) {
+        _missingLetters >>= 1;
+        _availableBlanks--;
+      }
 
       // If we can't, give up
       if (_availableBlanks < 0) return false;
