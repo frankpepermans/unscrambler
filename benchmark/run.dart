@@ -3,21 +3,23 @@ import 'dart:io';
 import 'package:unscrambler/unscrambler.dart';
 
 void main() {
-  final String C = new File('bin/sowpods.txt').readAsStringSync();
+  final source = File('bin/sowpods.txt').readAsStringSync();
 
-  Dictionary D = new Dictionary(C);
+  final dictionary = Dictionary(source);
 
   // warmup
-  for (int i = 0; i < 100; i++) match(D, 'battles', 1, false);
+  for (var i = 0; i < 100; i++) {
+    match(dictionary, 'battles', 1, log: false);
+  }
 
-  print(match(D, 'battles', 0, true));
-  print(match(D, 'battles', 1, true));
-  print(match(D, 'battles', 2, true));
-  print(match(D, 'battles', 3, true));
-  //print(anagrams(D, 'battles', 0, true));
+  match(dictionary, 'battles', 0, log: true);
+  match(dictionary, 'battles', 1, log: true);
+  match(dictionary, 'battles', 2, log: true);
+  match(dictionary, 'battles', 3, log: true);
+  anagrams(dictionary, 'battles', 0, log: true);
 }
 
-const List<int> LETTER_VALS = const <int>[
+const List<int> letterVals = <int>[
   1,
   3,
   3,
@@ -46,49 +48,63 @@ const List<int> LETTER_VALS = const <int>[
   10
 ];
 
-List<WordBinary> match(Dictionary D, String V, int N, bool printReport) {
-  Stopwatch S;
+List<WordBinary> match(Dictionary dict, String value, int blanks, {bool log}) {
+  final watch = Stopwatch();
 
-  if (printReport) S = new Stopwatch()..start();
+  if (log) watch.start();
 
-  final List<WordBinary> L = D.match(V, N);
-  // roh
+  final wordList = dict.match(value, blanks);
 
-  if (printReport) {
-    S.stop();
+  if (log) {
+    watch.stop();
     print(
-        'MATCH => scramble:"$V" blanks:[$N], elapsed:${S.elapsedMilliseconds} ms');
+      'MATCH => scramble:"$value" '
+      'blanks:[$blanks], '
+      'elapsed:${watch.elapsedMilliseconds} ms',
+    );
   }
 
-  L.sort((WordBinary A, WordBinary B) {
-    final int vA =
-        A.word.codeUnits.fold(0, (int P, int C) => P + LETTER_VALS[C - 97]);
-    final int vB =
-        B.word.codeUnits.fold(0, (int P, int C) => P + LETTER_VALS[C - 97]);
+  int foldChars(int prev, int char) => prev + letterVals[char - 97];
+
+  wordList.sort((a, b) {
+    final vA = a.word.codeUnits.fold(0, foldChars),
+        vB = b.word.codeUnits.fold(0, foldChars);
 
     return vB.compareTo(vA);
   });
 
-  return L;
+  return wordList;
 }
 
-List<WordBinary> anagrams(Dictionary D, String V, int N, bool printReport) {
-  final Stopwatch S = new Stopwatch()..start();
+List<WordBinary> anagrams(
+  Dictionary dict,
+  String value,
+  int blanks, {
+  bool log,
+}) {
+  final watch = Stopwatch();
 
-  final List<WordBinary> L = D.anagrams(V, N);
-  // roh
+  if (log) watch.start();
 
-  S.stop();
-  print('${S.elapsedMilliseconds} ms');
+  final wordList = dict.anagrams(value, blanks);
 
-  L.sort((WordBinary A, WordBinary B) {
-    final int vA =
-        A.word.codeUnits.fold(0, (int P, int C) => P + LETTER_VALS[C - 97]);
-    final int vB =
-        B.word.codeUnits.fold(0, (int P, int C) => P + LETTER_VALS[C - 97]);
+  if (log) {
+    watch.stop();
+    print(
+      'ANAGRAMS => scramble:"$value" '
+      'blanks:[$blanks], '
+      'elapsed:${watch.elapsedMilliseconds} ms',
+    );
+  }
+
+  int foldChars(int prev, int char) => prev + letterVals[char - 97];
+
+  wordList.sort((a, b) {
+    final vA = a.word.codeUnits.fold(0, foldChars),
+        vB = b.word.codeUnits.fold(0, foldChars);
 
     return vB.compareTo(vA);
   });
 
-  return L;
+  return wordList;
 }

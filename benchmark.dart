@@ -7,20 +7,19 @@ import 'package:benchmark_harness/benchmark_harness.dart';
 void main() => TemplateBenchmark.main();
 
 class TemplateBenchmark extends BenchmarkBase {
-  
-  Dictionary D;
-  
   TemplateBenchmark() : super('Template');
 
-  static void main() => new TemplateBenchmark().report();
+  Dictionary dictionary;
+
+  static void main() => TemplateBenchmark().report();
 
   @override
-  List<WordBinary> run() => D.match('polymer', 0);
+  List<WordBinary> run() => dictionary.match('polymer', 0);
 
   @override
   void setup() {
-    final String C = new File('bin/sowpods.txt').readAsStringSync();
-    
-    D = new Dictionary(C);
+    final source = File('bin/sowpods.txt').readAsStringSync();
+
+    dictionary = Dictionary(source);
   }
 }

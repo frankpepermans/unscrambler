@@ -4,11 +4,11 @@ import 'package:unscrambler/unscrambler.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final source = new File('bin/sowpods.txt').readAsStringSync(),
-      dictionary = new Dictionary(source);
+  final source = File('bin/sowpods.txt').readAsStringSync(),
+      dictionary = Dictionary(source);
 
   test('', () {
-    const expectedMatches = const <String>[
+    const expectedMatches = <String>[
       'no',
       'nox',
       'noy',
@@ -24,7 +24,7 @@ void main() {
       'zo',
       'zzz'
     ],
-        expectedAnagrams = const <String>[
+        expectedAnagrams = <String>[
       'batlets',
       'battels',
       'battles',
@@ -40,14 +40,16 @@ void main() {
 
     expect(allMatches.length, 14);
 
-    allMatches
-        .forEach((bin) => expect(expectedMatches.contains(bin.word), true));
+    for (final bin in allMatches) {
+      expect(expectedMatches.contains(bin.word), true);
+    }
 
     expect(allMatches2.length, 192);
 
     expect(allMatches3.length, 1452);
 
-    allMatches4.forEach(
-        (WordBinary W) => expect(expectedAnagrams.contains(W.word), true));
+    for (final bin in allMatches4) {
+      expect(expectedAnagrams.contains(bin.word), true);
+    }
   });
 }
