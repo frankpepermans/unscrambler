@@ -8,7 +8,7 @@ class WordBinary {
   final String word;
   final int wordLen;
 
-  List<int> segments;
+  Uint8List segments;
 
   bool isAnagramOf(WordBinary other, int numBlanks) =>
       (other.wordLen + numBlanks >= wordLen) &&
