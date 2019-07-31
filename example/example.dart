@@ -4,8 +4,8 @@ import 'package:unscrambler/unscrambler.dart';
 
 void main() {
   /// Fetch the English words dictionary file
-  final allWords = new File('bin/sowpods.txt').readAsStringSync(),
-      dictionary = new Dictionary(allWords);
+  final allWords = File('bin/sowpods.txt').readAsStringSync(),
+      dictionary = Dictionary(allWords);
 
   /// let's define a Scrabble play state:
   /// We have 7 letters, 6 of those are random, 1 is blank (wildcard)
