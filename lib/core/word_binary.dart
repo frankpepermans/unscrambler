@@ -10,15 +10,13 @@ class WordBinary {
 
   List<int> segments;
 
-  bool isAnagramOf(WordBinary other, int numBlanks) {
-    return (other.wordLen + numBlanks >= wordLen) &&
-        _test(other.segments, numBlanks);
-  }
+  bool isAnagramOf(WordBinary other, int numBlanks) =>
+      (other.wordLen + numBlanks >= wordLen) &&
+      _test(other.segments, numBlanks);
 
-  bool matches(WordBinary other, int numBlanks) {
-    return (other.wordLen + numBlanks >= wordLen) &&
-        _test(other.segments, numBlanks);
-  }
+  bool matches(WordBinary other, int numBlanks) =>
+      (other.wordLen + numBlanks >= wordLen) &&
+      _test(other.segments, numBlanks);
 
   bool _test(Uint8List other, int numBlanks) {
     var _availableBlanks = numBlanks;
