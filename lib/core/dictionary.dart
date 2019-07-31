@@ -5,33 +5,26 @@ class Dictionary {
 
   final _structures = <WordBinary>[];
 
-  Dictionary(String source) {
-    final String T = source.substring(0, 100);
-    String splitChar;
+  Dictionary(String source, {String delimiter}) {
+    final String sample = source.substring(0, 100);
+    String split;
 
-    if (_isCleanSplit(T.split('\r'))) splitChar = '\r';
-    if (_isCleanSplit(T.split('\n'))) splitChar = '\n';
-    if (_isCleanSplit(T.split('\n\r'))) splitChar = '\n\r';
-    if (_isCleanSplit(T.split('\r\n'))) splitChar = '\r\n';
+    if (delimiter != null) {
+      split = delimiter;
+    } else {
+      //Go from the least likely encoding to the most likely,
+      //and from the longest to the shortest
+      if (sample.contains('\n\r')) split = '\n\r'; // Almost unheard of
+      if (sample.contains('\r\n')) split = '\r\n'; // Windows line endings
+      if (sample.contains('\r')) split = '\r'; // Last seen on OS-9
+      if (sample.contains('\n')) split = '\n'; // UNIX line endings
+    }
 
-    source.split(splitChar).forEach((word) {
-      if (word.isNotEmpty) addStructure(new WordBinary(word));
-    });
+    final words = source.split(split);
+    for (final word in words) addStructure(WordBinary(word));
   }
 
   void addStructure(WordBinary S) => _structures.add(S);
-
-  bool _isCleanSplit(List<String> T) {
-    if (T.length <= 1) return false;
-
-    final S = T[1],
-        min = 97,
-        max = 97 + Dictionary.NUM_CHARS,
-        J = S.codeUnits.firstWhere((unit) => unit < min || unit >= max,
-            orElse: () => null);
-
-    return J == null;
-  }
 
   List<WordBinary> match(String W, int numBlanks) {
     final S = new WordBinary(W),
