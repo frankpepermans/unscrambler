@@ -1,19 +1,75 @@
 part of unscrambler;
 
+/// A letter position independent representation of a word
+///
+/// The representation is a simple binary format using one bit per
+/// letter occurence
+///
+///    a   = 00000001
+///    aa  = 00000011
+///    aaa = 00000111
+///    ...
+///
+/// This allows us to check if we have enough letters, or are missing a letter
+/// using the following operation
+///
+///     Given A is a letter of the first word,
+///       B is the same letter of the second word
+///       And that A and B are consecutive suites of bits
+///
+///     X = (B^A) & A
+///
+///     X is now a consecutive suite of bits, either 0, or the number of missing
+///     letters offset to the left by the number of letters we already have.
+///
+///     if(X == 0) continue
+///
+///     M = 0b00000001
+///
+///     while(X & M != 1) X >>= 1
+///
+///     X is now a consecutive suite of bits aligned to the right
+///
+///     while(X & M == 1)
+///       X >>= 1
+///       Available Blanks - 1
+///
+///     if(Available Blanks < 0) We don't have enough letters to make this word
+///
+/// A [WordBinary] matches another if
+/// - it is the same length, or bigger
+/// - it has an equal or larger amount of each letter
+/// - it has enough blanks to replace missing letters
+///
+/// A [WordBinary] is anagram to another if
+/// - it is the same length (with blanks)
+/// - it matches the other word
 class WordBinary {
+  /// Creates a string's binary representation
   WordBinary(this.word) : wordLen = word.length {
     segments = toBinary();
   }
 
+  /// The string used to create this [WordBinary]
   final String word;
+
+  /// The length of the given string, precomputed for later
   final int wordLen;
 
+  /// The binary representation of the string, read [WordBinary] for details
   Uint8List segments;
 
+  /// A [WordBinary] is anagram to another if
+  /// - it is the same length (with blanks)
+  /// - it matches the other word
   bool isAnagramOf(WordBinary other, int numBlanks) =>
       (other.wordLen + numBlanks == wordLen) &&
       _test(other.segments, numBlanks);
 
+  /// A [WordBinary] matches another if
+  /// - it is the same length, or bigger
+  /// - it has an equal or larger amount of each letter
+  /// - it has enough blanks to replace missing letters
   bool matches(WordBinary other, int numBlanks) =>
       (other.wordLen + numBlanks >= wordLen) &&
       _test(other.segments, numBlanks);
@@ -52,15 +108,16 @@ class WordBinary {
     return true;
   }
 
+  /// Creates the binary representation of the string,
+  /// read [WordBinary] for details
   Uint8List toBinary() {
     // The signature is 32*8 (so 256) bits in order to fit into 2 SIMDs ops
     // The length can also be computed as the first element of the list
     final signature = Uint8List(32),
         units = word.toLowerCase().codeUnits,
-        charFrequency = List<int>(26),
-        len = units.length;
+        charFrequency = List<int>(26);
 
-    for (var i = 0; i < len; i++) {
+    for (var i = 0; i < wordLen; i++) {
       // Ascii -> decimal alphabetic order - 1
       final j = units[i] - 97;
 
@@ -76,7 +133,7 @@ class WordBinary {
     }
 
     // The length is the first element of the signature to compare it with SIMD
-    signature[0] = len;
+    signature[0] = wordLen;
 
     for (var i = 0; i < 26; i++) {
       // Substracting one will therefore flip all previous bits
