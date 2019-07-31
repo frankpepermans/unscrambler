@@ -4,8 +4,8 @@ import 'package:unscrambler/unscrambler.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final C = new File('bin/sowpods.txt').readAsStringSync(),
-      D = new Dictionary(C);
+  final source = new File('bin/sowpods.txt').readAsStringSync(),
+      dictionary = new Dictionary(source);
 
   test('', () {
     const expectedMatches = const <String>[
@@ -31,10 +31,12 @@ void main() {
       'blatest',
       'tablets'
     ];
-    final allMatches = D.match('zyxonzz', 0),
-        allMatches2 = D.match('zyxonzz', 1),
-        allMatches3 = D.match('zyxonzz', 2),
-        allMatches4 = D.anagrams('battles', 0);
+    final allMatches = dictionary.match('zyxonzz', 0),
+        allMatches2 = dictionary.match('zyxonzz', 1),
+        allMatches3 = dictionary.match('zyxonzz', 2),
+        allMatches4 = dictionary.anagrams('battles', 0);
+
+    print(allMatches.map<String>((v) => v.word).toList());
 
     expect(allMatches.length, 14);
 
@@ -42,6 +44,7 @@ void main() {
         .forEach((bin) => expect(expectedMatches.contains(bin.word), true));
 
     expect(allMatches2.length, 192);
+
     expect(allMatches3.length, 1452);
 
     allMatches4.forEach(
