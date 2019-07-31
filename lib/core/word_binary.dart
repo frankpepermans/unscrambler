@@ -53,38 +53,39 @@ class WordBinary {
   }
 
   Uint8List toBinary() {
-    // The signature is 32*8 (so 256) bits in order to fit into 2 SIMDs operations
+    // The signature is 32*8 (so 256) bits in order to fit into 2 SIMDs ops
     // The length can also be computed as the first element of the list
-    final Signature = Uint8List(32),
-        Units = word.toLowerCase().codeUnits,
-        CharFrequency = new List<int>(26),
-        len = Units.length;
+    final signature = Uint8List(32),
+        units = word.toLowerCase().codeUnits,
+        charFrequency = List<int>(26),
+        len = units.length;
 
     for (var i = 0; i < len; i++) {
       // Ascii -> decimal alphabetic order - 1
-      final j = Units[i] - 97;
+      final j = units[i] - 97;
 
       // The character frequency is counted in powers of 2
       // 2 = 00000010
       // 4 = 00000100
       // And so on. Only one bit is ever active for a given letter.
-      if (CharFrequency[j] == null)
-        CharFrequency[j] = 2;
-      else
-        CharFrequency[j] *= 2;
+      if (charFrequency[j] == null) {
+        charFrequency[j] = 2;
+      } else {
+        charFrequency[j] *= 2;
+      }
     }
 
     // The length is the first element of the signature to compare it with SIMD
-    Signature[0] = len;
+    signature[0] = len;
 
     for (var i = 0; i < 26; i++) {
-      // Substracting one will enable all of the bits before the currently active one
+      // Substracting one will therefore flip all previous bits
       // 4 = 00000100  => 3 = 000000011
       // 2^2 = 4          2 bits are enabled.
-      Signature[i + 1] = (CharFrequency[i] ?? 1) - 1;
+      signature[i + 1] = (charFrequency[i] ?? 1) - 1;
     }
 
-    return Signature;
+    return signature;
   }
 
   @override
