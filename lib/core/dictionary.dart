@@ -2,7 +2,7 @@ part of unscrambler;
 
 class Dictionary {
   Dictionary(String source, {String delimiter}) {
-    final String sample = source.substring(0, 100);
+    final sample = source.substring(0, 100);
     String split;
 
     if (delimiter != null) {
@@ -17,7 +17,11 @@ class Dictionary {
     }
 
     final words = source.split(split);
-    for (final word in words) if (word != '') addStructure(WordBinary(word));
+    for (final word in words) {
+      if (word != '') {
+        addStructure(WordBinary(word));
+      }
+    }
   }
 
   final _structures = <WordBinary>[];
