@@ -26,7 +26,7 @@ class Dictionary {
 
     final words = source.split(split);
     for (final word in words) {
-      if (word != '') {
+      if (word.isNotEmpty) {
         addStructure(WordBinary(word));
       }
     }
