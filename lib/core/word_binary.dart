@@ -11,15 +11,13 @@ class WordBinary {
   List<int> segments;
 
   bool isAnagramOf(WordBinary other, int numBlanks) {
-    if (other.wordLen + numBlanks != wordLen) return false;
-
-    return _test(other.segments, numBlanks);
+    return (other.wordLen + numBlanks >= wordLen) &&
+        _test(other.segments, numBlanks);
   }
 
   bool matches(WordBinary other, int numBlanks) {
-    if (other.wordLen + numBlanks < wordLen) return false;
-
-    return _test(other.segments, numBlanks);
+    return (other.wordLen + numBlanks >= wordLen) &&
+        _test(other.segments, numBlanks);
   }
 
   bool _test(Uint8List other, int numBlanks) {
