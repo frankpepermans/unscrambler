@@ -22,31 +22,31 @@ class Dictionary {
 
   final _structures = <WordBinary>[];
 
-  void addStructure(WordBinary S) => _structures.add(S);
+  void addStructure(WordBinary word) => _structures.add(word);
 
-  List<WordBinary> match(String W, int numBlanks) {
-    final S = new WordBinary(W),
+  List<WordBinary> match(String word, int numBlanks) {
+    final wordBinary = WordBinary(word),
         allMatches = <WordBinary>[],
         len = _structures.length;
 
     for (var i = 0; i < len; i++) {
       final s = _structures[i];
 
-      if (s.matches(S, numBlanks)) allMatches.add(s);
+      if (s.matches(wordBinary, numBlanks)) allMatches.add(s);
     }
 
     return allMatches;
   }
 
-  List<WordBinary> anagrams(String W, int numBlanks) {
-    final S = new WordBinary(W),
+  List<WordBinary> anagrams(String word, int numBlanks) {
+    final wordBinary = WordBinary(word),
         allMatches = <WordBinary>[],
         len = _structures.length;
 
     for (var i = 0; i < len; i++) {
       final s = _structures[i];
 
-      if (s.isAnagramOf(S, numBlanks)) allMatches.add(s);
+      if (s.isAnagramOf(wordBinary, numBlanks)) allMatches.add(s);
     }
 
     return allMatches;
