@@ -1,16 +1,16 @@
 part of unscrambler;
 
 class WordBinary {
-  final String word;
-
-  List<int> segments;
-  int wordLen;
-
   WordBinary(this.word) {
     wordLen = word.length;
 
     segments = toBinary();
   }
+
+  final String word;
+
+  List<int> segments;
+  int wordLen;
 
   bool isAnagramOf(WordBinary other, int numBlanks) {
     if (other.wordLen + numBlanks != wordLen) return false;
