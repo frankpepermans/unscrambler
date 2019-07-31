@@ -17,9 +17,7 @@ class WordBinary {
   }
 
   bool matches(WordBinary other, int numBlanks) {
-    var n = numBlanks;
-
-    if (other.wordLen + n < wordLen) return false;
+    if (other.wordLen + numBlanks < wordLen) return false;
 
     return _test(other.segments, numBlanks);
   }
