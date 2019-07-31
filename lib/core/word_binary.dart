@@ -13,7 +13,7 @@ class WordBinary {
   bool isAnagramOf(WordBinary other, int numBlanks) {
     if (other.wordLen + numBlanks != wordLen) return false;
 
-    return matches(other, numBlanks);
+    return _test(other.segments, numBlanks);
   }
 
   bool matches(WordBinary other, int numBlanks) {
