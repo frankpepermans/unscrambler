@@ -17,7 +17,7 @@ class Dictionary {
     }
 
     final words = source.split(split);
-    for (final word in words) addStructure(WordBinary(word));
+    for (final word in words) if (word != '') addStructure(WordBinary(word));
   }
 
   final _structures = <WordBinary>[];
@@ -31,7 +31,6 @@ class Dictionary {
 
     for (var i = 0; i < len; i++) {
       final s = _structures[i];
-
       if (s.matches(wordBinary, numBlanks)) allMatches.add(s);
     }
 
