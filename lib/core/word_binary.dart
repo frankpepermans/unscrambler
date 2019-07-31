@@ -1,14 +1,12 @@
 part of unscrambler;
 
 class WordBinary {
-  WordBinary(this.word) {
-    wordLen = word.length;
-
+  WordBinary(this.word) : wordLen = word.length {
     segments = toBinary();
   }
 
   final String word;
-  int wordLen;
+  final int wordLen;
 
   List<int> segments;
 
